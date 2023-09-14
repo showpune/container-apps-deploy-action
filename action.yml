@@ -486,7 +486,7 @@ runs:
     - name: Set Oryx++ Builder as default builder
       if: ${{ inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' }}
       shell: bash
-      run: pack config default-builder mcr.microsoft.com/oryx/builder:20230208.1
+      run: pack config default-builder paketobuildpacks/builder:base
 
     - name: Set telemetry for Oryx++ Builder
       if: ${{ inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' && inputs.disableTelemetry == 'false' }}
@@ -510,7 +510,8 @@ runs:
           ${{ env.CA_GH_ACTION_IMAGE_TO_DEPLOY }} \
           --path ${{ inputs.appSourcePath }} \
           --builder paketobuildpacks/builder:base \
-          --run-image mcr.microsoft.com/oryx/${{ env.CA_GH_ACTION_RUNTIME_STACK }} \
+          --env "BP_JAVA_APP_SERVER=liberty"  \
+          --env BP_MAVEN_BUILT_ARTIFACT="target/*.[ejw]ar src/main/liberty/config/*" \
           ${{ env.CA_GH_ACTION_ORYX_BUILDER_TELEMETRY_ARG }}
 
     - name: Create runnable application image using provided Dockerfile

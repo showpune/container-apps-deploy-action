@@ -389,20 +389,6 @@ runs:
         CA_GH_ACTION_RUNTIME_STACK="${{ inputs.runtimeStack }}"
         echo "CA_GH_ACTION_RUNTIME_STACK=${CA_GH_ACTION_RUNTIME_STACK}" >> $GITHUB_ENV
 
-    - name: Determine runtime stack if not provided
-      if: ${{ inputs.appSourcePath != '' && inputs.runtimeStack == '' }}
-      shell: bash
-      run: |
-        docker run \
-          --rm \
-          -v ${{ inputs.appSourcePath }}:/app \
-          mcr.microsoft.com/oryx/cli:builder-debian-buster-20230208.1 \
-          /bin/bash \
-          -c "oryx dockerfile /app | head -n 1 | sed 's/ARG RUNTIME=//' >> /app/oryx-runtime.txt"
-        CA_GH_ACTION_RUNTIME_STACK=$(head -n 1 ${{ inputs.appSourcePath }}/oryx-runtime.txt)
-        echo "CA_GH_ACTION_RUNTIME_STACK=${CA_GH_ACTION_RUNTIME_STACK}" >> $GITHUB_ENV
-        rm ${{ inputs.appSourcePath }}/oryx-runtime.txt
-
     - name: Export disabled ingress value to environment variable
       if: ${{ inputs.ingress == 'disabled' && env.CA_GH_ACTION_YAML_PROVIDED != 'true' }}
       shell: bash

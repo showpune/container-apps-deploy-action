@@ -1,4 +1,4 @@
-name: 'Azure Container Apps Build and Deploy'
+name: 'Azure Container Apps Build and Deploy for Java'
 description: |
   'GitHub Action for building and deploying Azure Container Apps'
 branding:

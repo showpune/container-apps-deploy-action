@@ -645,13 +645,3 @@ runs:
       run: |
         CA_GH_ACTION_SCENARIO_ARG="--property 'scenario=used-builder'"
         echo "CA_GH_ACTION_SCENARIO_ARG=${CA_GH_ACTION_SCENARIO_ARG}" >> $GITHUB_ENV
-
-    - name: Log telemetry for action
-      if: ${{ always() && inputs.disableTelemetry == 'false' }}
-      shell: bash
-      run: |
-        docker run \
-          --rm \
-          mcr.microsoft.com/oryx/cli:debian-buster-20230207.2 \
-          /bin/bash \
-          -c "oryx telemetry --event-name 'ContainerAppsGitHubAction' ${{ env.CA_GH_ACTION_LENGTH_MILLISECONDS_ARG }} ${{ env.CA_GH_ACTION_SCENARIO_ARG }} ${{ env.CA_GH_ACTION_RESULT_ARG }}"

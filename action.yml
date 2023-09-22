@@ -501,7 +501,8 @@ runs:
           --builder paketobuildpacks/builder:base \
           --env "BP_JAVA_APP_SERVER=liberty"  \
           --env BP_MAVEN_BUILT_ARTIFACT="target/*.[ejw]ar src/main/liberty/config/*" \
-          ${{ env.CA_GH_ACTION_ORYX_BUILDER_TELEMETRY_ARG }}
+          ${{ env.CA_GH_ACTION_ORYX_BUILDER_TELEMETRY_ARG }} \
+          ${{ inputs.buildEnv }}
 
     - name: Create runnable application image using provided Dockerfile
       if: ${{ inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH != '' }}

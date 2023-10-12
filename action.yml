@@ -464,7 +464,7 @@ runs:
     - name: Install pack CLI on non-Windows runner
       if: ${{ runner.os != 'Windows' && inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' }}
       shell: bash
-      run: (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.27.0/pack-v0.27.0-${{ runner.os }}.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)
+      run: (curl -sSL "https://github.com/buildpacks/pack/releases/download/v0.30.0/pack-v0.30.0-${{ runner.os }}.tgz" | sudo tar -C /usr/local/bin/ --no-same-owner -xzv pack)
 
     - name: Install pack CLI on Windows runner
       if: ${{ runner.os == 'Windows' && inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' }}
@@ -478,7 +478,9 @@ runs:
     - name: Set Oryx++ Builder as default builder
       if: ${{ inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' }}
       shell: bash
-      run: pack config default-builder liyidockid/builder-java-azure:latest
+      run: |
+          pack config default-builder liyidockid/builder-java-azure:latest
+          pack config experimental true
 
     - name: Set telemetry for Oryx++ Builder
       if: ${{ inputs.appSourcePath != '' && env.CA_GH_ACTION_DOCKERFILE_PATH == '' && inputs.disableTelemetry == 'false' }}

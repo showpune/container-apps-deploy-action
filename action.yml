@@ -1,4 +1,4 @@
-name: 'Azure Container Apps Build and Deploy'
+name: 'Showpune Azure Container Apps Build and Deploy'
 description: |
   'GitHub Action for building and deploying Azure Container Apps'
 branding:
